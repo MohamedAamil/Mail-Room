@@ -100,6 +100,9 @@ def compose():
                     org = "None"
                     name = "None"
                 now = datetime.now()
+                h_add = timedelta(hours=5)
+                m_add = timedelta(minutes=30)
+                now = now - h_add - m_add
                 time = now.strftime("%H:%M")
 
                 send_mail(session["email"], rec, sub, con, time, org, name)
