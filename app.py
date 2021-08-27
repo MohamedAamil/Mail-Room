@@ -8,14 +8,12 @@ import random
 
 app = Flask(__name__)
 app.secret_key = "123@abc"
-app.permanent_session_lifetime = timedelta(minutes=1)
 change = False
 upload_folder = "uploads"
 app.config['UPLOAD_FOLDER'] = upload_folder
 
 
 def set_session(email, name):
-    session.permanent = True
     session["logged_in"] = True
     session["email"] = email
     session["name"] = name
