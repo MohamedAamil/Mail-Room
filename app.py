@@ -5,6 +5,7 @@ from datetime import timedelta, datetime
 import os
 from werkzeug.utils import secure_filename
 import random
+import pytz
 
 app = Flask(__name__)
 app.secret_key = "123@abc"
@@ -99,10 +100,8 @@ def compose():
                 except IndexError:
                     org = "None"
                     name = "None"
-                now = datetime.now()
-                h_add = timedelta(hours=5)
-                m_add = timedelta(minutes=30)
-                now = now - h_add - m_add
+                IST = pytz.timezone('Asia/Kolkata')
+                now = datetime.now(IST)
                 time = now.strftime("%H:%M")
 
                 send_mail(session["email"], rec, sub, con, time, org, name)
