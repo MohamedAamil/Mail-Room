@@ -140,15 +140,18 @@ def inbox():
 
         else:
             key = request.form["key"]
-            if request.form['opt'] == "1":
-                time, sen, sub, no = s_con_i(key, session["email"])
-            elif request.form['opt'] == "2":
-                time, sen, sub, _, no = s_id(key)
-            else:
-                sen, sub, time, no = get_inbox(session["email"])
-            length = len(sen)
-            return render_template("inbox.html", email=session["email"], sen=sen, sub=sub, time=time, length=length,
+            if key != "":
+                if request.form['opt'] == "1":
+                    time, sen, sub, no = s_con_i(key, session["email"])
+                elif request.form['opt'] == "2":
+                    time, sen, sub, _, no = s_id(key)
+                else:
+                    sen, sub, time, no = get_inbox(session["email"])
+                length = len(sen)
+                return render_template("inbox.html", email=session["email"], sen=sen, sub=sub, time=time, length=length,
                                    name=session["name"], no=no)
+            else:
+                return redirect("/inbox")
 
 
 @app.route("/sent", methods=["GET", "POST"])
@@ -175,15 +178,18 @@ def sent():
 
         else:
             key = request.form["key"]
-            if request.form['opt'] == "1":
-                time, sub, rev, no = s_con_s(key, session["email"])
-            elif request.form['opt'] == "2":
-                time, _, sub, rev, no = s_id(key)
+            if key != "":
+                if request.form['opt'] == "1":
+                    time, sub, rev, no = s_con_s(key, session["email"])
+                elif request.form['opt'] == "2":
+                    time, _, sub, rev, no = s_id(key)
+                else:
+                    rev, sub, time, no = get_sent(session["email"])
+                length = len(rev)
+                return render_template("sent.html", email=session["email"], rev=rev, sub=sub, time=time, length=length,
+                                    name=session["name"], no=no)
             else:
-                rev, sub, time, no = get_sent(session["email"])
-            length = len(rev)
-            return render_template("sent.html", email=session["email"], rev=rev, sub=sub, time=time, length=length,
-                                   name=session["name"], no=no)
+                return redirect("/sent")
 
 
 @app.route("/view", methods=["GET", "POST"])
